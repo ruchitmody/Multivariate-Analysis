@@ -1,0 +1,77 @@
+---
+title: "Ruchit_Jatin_Mody_MVA_HW1"
+author: "Ruchit Jatin Mody"
+date: "2023-02-06"
+output: html_document
+---
+
+```{r}
+library(readr)
+Bumpus_sparrows <- read_csv("C:/Users/Ruchit Modi/Downloads/Bumpus_sparrows.csv")
+Bumpus_sparrows
+sparr <- Bumpus_sparrows
+class(sparr)
+
+#Splitting into survived and non-survived sparrows
+
+survived<-sparr[sparr[,"Survivorship"]=="S",]
+nonsurvived <- sparr[sparr[,"Survivorship"]=="NS",]
+
+class(survived)
+class(nonsurvived)
+
+#Converting dataframes into 2 matrices
+
+survived_mat <- data.matrix(survived)
+class(survived_mat)
+
+nonsurvived_mat <- data.matrix(nonsurvived)
+class(nonsurvived_mat)
+
+#Dropping Survivorship column from survived and non-survived matrices as it is non numeric.
+
+surv_sparrow <- survived_mat[,-1]
+surv_sparrow
+
+nonsurv_sparow <- nonsurvived_mat[,-1]
+nonsurv_sparow
+
+#Calculating ColMeans, RowMeans for Survived Sparrows
+
+col_means <- colMeans(surv_sparrow)
+row_means <- rowMeans(surv_sparrow)
+means <- mean(surv_sparrow)
+
+col_means
+row_means
+means
+
+#Calculating ColMeans, RowMeans for Non-Survived Sparrows
+
+ncol_means <- colMeans(nonsurv_sparow)
+nrow_means <- rowMeans(nonsurv_sparow)
+nmeans <- mean(nonsurv_sparow)
+
+ncol_means
+nrow_means
+nmeans
+
+#Calculating the Covariance and Correlation for Survived sparrows
+
+cov(surv_sparrow)
+cor(surv_sparrow)
+
+#Checking the correlation of survived sparrows, a diagonal matrix is seen and any of the two variables from the matrix are not strongly correlated as the range is near to 0.
+
+#Calculating the Covariance and Correlation for Non-survived sparrows
+
+cov(nonsurv_sparow)
+cor(nonsurv_sparow)
+
+#checking the covariance of Non-survived sparrows, covariance between Alar_Extent, Total_length is higher which indicates that they are highly dependent on each other.
+
+#Checking the correlation of Non-survived sparrows it is seen that any of the two variables from the matrix are not strongly correlated as the range is near to 0.
+
+
+
+```
