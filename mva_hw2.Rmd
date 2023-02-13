@@ -1,0 +1,76 @@
+---
+title: "MVA_HW2"
+author: "Ruchit Jatin Mody"
+date: "2023-02-13"
+output: html_document
+---
+
+```{r}
+
+#Scatter Plot Matrix on sparrows data-set
+library(readr)
+sparrows <- read_csv("C:/Users/Ruchit Modi/Downloads/Bumpus_sparrows.csv")
+str(sparrows)
+attach(sparrows)
+sparr.birds <- data.frame(as.numeric(rownames(sparrows)),sparrows[,2:6])
+labs.diagonal <- c("Bird","Total length","Alar extent","L. beak & head","L. humerous","L. keel & sternum")
+plot(Total_length, Alar_extent,xlab="Total Length (mm)",ylab="Alar extent (nm)",pch=c(16,1))
+library(car)
+scatterplotMatrix(~Total_length+Alar_extent+L_beak_head+L_humerous+L_keel_sternum | Survivorship, data=sparr.birds, var.labels=labs.diagonal,cex.labels=0.7, diagonal="boxplot",smooth=FALSE,reg.line=FALSE,pch=c(1,16),col=rep("black",2), legend.plot=FALSE)
+#Importing libraries
+# load packages
+library(lattice)
+library(ggplot2)
+library(ggridges)
+library(ggvis)
+library(ggthemes)
+library(cowplot)
+library(gapminder)
+library(gganimate)
+library(dplyr)
+library(tidyverse)
+library(grid)
+library(gridExtra)
+library(RColorBrewer)
+# ggplot
+ggplot(sparrows, aes(x=Alar_extent,y=Total_length)) + geom_point()
+ggplot(sparrows, aes(x=Alar_extent,y=Total_length)) + facet_wrap(L_beak_head) + geom_point()
+ggplot(sparrows, aes(x=Alar_extent,y=Total_length)) + geom_point(aes(color=L_beak_head))
+#bar chart
+ggplot(sparrows, aes(Alar_extent)) + geom_bar(position="stack") 
+ggplot(sparrows, aes(Total_length) )+ geom_bar(position="stack")
+ggplot(sparrows, aes(Total_length)) + facet_grid(.~Survivorship) + geom_bar(position="dodge")
+# histogram
+ggplot(sparrows, aes(L_beak_head))+geom_histogram()
+ggplot(sparrows, aes(L_beak_head))+geom_histogram(aes(fill = after_stat(count)))
+# regression
+ggplot(sparrows, aes(x=L_beak_head, y=L_humerous)) + geom_point() + geom_smooth(method=lm)
+ggplot(sparrows, aes(x=L_beak_head, y=L_humerous)) + geom_point() + stat_smooth()
+ggplot(sparrows, aes(x=L_beak_head, y=L_humerous)) + geom_point() + stat_smooth()
+# violin plot 
+ggplot(sparrows, aes(x=Alar_extent, y=Total_length)) + geom_violin()
+ggplot(sparrows, aes(x=Alar_extent, y=Total_length)) + geom_violin()
+ggplot(sparrows, aes(x=Alar_extent, y=Total_length)) + geom_violin()
+# box plot
+ggplot(sparrows, aes(x=L_beak_head, y=L_humerous)) + geom_boxplot()
+ggplot(sparrows, aes(x=L_beak_head, y=L_humerous)) + geom_boxplot() + coord_flip()
+# density plot and ggridges
+ggplot(sparrows, aes(x=L_beak_head)) + geom_density() 
+ggplot(sparrows, aes(x=L_beak_head, fill=L_humerous, color=L_humerous)) + geom_density() 
+ggplot(sparrows, aes(x=L_beak_head, fill=L_humerous, color=L_humerous)) + geom_density(alpha=0.3, aes(y=..scaled..)) 
+ggplot(sparrows, aes(x=Alar_extent, y=Total_length)) + geom_density_ridges(aes(y=Survivorship))
+ggplot(sparrows, aes(x=Alar_extent)) + geom_density() 
+ggplot(sparrows, aes(x=Alar_extent, y=Total_length)) + geom_density_ridges(aes(y=Survivorship)) 
+# hexbin
+ggplot(sparrows, aes(x=Alar_extent, y=Total_length)) + geom_hex() 
+# with ggthemes (see also ggsci, ggthemr)
+lastplot <- ggplot(sparrows, aes(x=Total_length,y=Alar_extent)) + xlim(150,170) + geom_point(aes(color=Survivorship)) + stat_smooth() + 
+  labs(x="Total length of sparrows", y="Width of sparrows", title="Sparrows Data") 
+lastplot + theme_bw()
+lastplot + theme_cowplot()
+lastplot + theme_dark()
+lastplot + theme_economist()
+lastplot + theme_fivethirtyeight()
+lastplot + theme_tufte()
+lastplot + theme_wsj()
+```
