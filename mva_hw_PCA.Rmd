@@ -1,0 +1,42 @@
+---
+title: "mva_hw_pca"
+author: "Ruchit Jatin Mody"
+date: "2023-03-19"
+output: html_document
+---
+
+```{r}
+# Factor Analysis
+
+library(psych)
+
+bank_data <- read.csv("C:/Users/Ruchit Modi/Downloads/MVA/bank.csv")
+
+attach(bank_data)
+data.matrix(bank_data)
+bank_data[1]
+fit.pc <- principal(bank_data[c(1,6,12,14)], nfactors=4, rotate="varimax")
+fit.pc
+round(fit.pc$values, 3)
+fit.pc$loadings
+# Loadings with more digits
+for (i in c(1)) { print(fit.pc$loadings[[1,i]])}
+# Communalities
+fit.pc$communality
+# Rotated factor scores, Notice the columns ordering: RC1, RC3, RC2 and RC4
+fit.pc$scores
+# Play with FA utilities
+
+fa.parallel(bank_data[c(1,6,12,14)]) # See factor recommendation
+fa.plot(fit.pc) # See Correlations within Factors
+fa.diagram(fit.pc) # Visualize the relationship
+
+vss(bank_data[c(1,6,12,14)]) # See Factor recommendations for a simple structure
+
+# Computing the rotated factor scores 
+scale.emp <- scale(bank_data[c(1,6,12,14)])
+scale.emp
+
+
+
+```
